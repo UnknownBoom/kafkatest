@@ -1,5 +1,6 @@
 package com.kafka.kafkatest.controller;
 
+import com.kafka.kafkatest.dto.MessageDto;
 import com.kafka.kafkatest.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -15,10 +16,15 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class KafkaProducerController {
     private final KafkaTemplate<Long, UserDto> kafkaTemplate;
+
     @GetMapping("{count}")
     public String sentToTopic(@PathVariable Integer count) throws ExecutionException, InterruptedException {
-        for(int i=0;i<count;i++){
-            kafkaTemplate.send("test", new UserDto().setEmail("TestEmail"+i).setUsername("firstUsername"+i));
+        for (int i = 0; i < count; i++) {
+            kafkaTemplate.send("test", new UserDto()
+                    .setEmail("TestEmail" + i)
+                    .setUsername("firstUsername" + i)
+                    .setMessage(new MessageDto().setId("Id"+i).setTest("test"+i))
+            );
         }
         return "OK";
     }

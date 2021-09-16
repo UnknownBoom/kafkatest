@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 public class UserDto {
     private String username;
     private String email;
-    private String message;
+    private MessageDto message;
     private boolean active;
 }
